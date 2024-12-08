@@ -1,0 +1,93 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa fa-credit-card"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment-wompi">
+          <div class="form-group">
+            <label for="input-status">{{ entry_status }}</label>
+            <select name="payment_wompi_status" id="input-status" class="form-control">
+              <option value="1" {% if payment_wompi_status %}selected{% endif %}>Enabled</option>
+              <option value="0" {% if not payment_wompi_status %}selected{% endif %}>Disabled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-test-mode">{{ entry_test_mode }}</label>
+            <select name="payment_wompi_test_mode" id="input-test-mode" class="form-control">
+              <option value="1" {% if payment_wompi_test_mode %}selected{% endif %}>Yes</option>
+              <option value="0" {% if not payment_wompi_test_mode %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-app-id">{{ entry_app_id }}</label>
+            <input type="text" name="payment_wompi_app_id" value="{{ payment_wompi_app_id }}" id="input-app-id" class="form-control {% if error_app_id %}is-invalid{% endif %}" />
+            {% if error_app_id %}<div class="invalid-feedback">{{ error_app_id }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="input-api-secret">{{ entry_api_secret }}</label>
+            <input type="text" name="payment_wompi_api_secret" value="{{ payment_wompi_api_secret }}" id="input-api-secret" class="form-control {% if error_api_secret %}is-invalid{% endif %}" />
+            {% if error_api_secret %}<div class="invalid-feedback">{{ error_api_secret }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="input-notification-email">{{ entry_notification_email }}</label>
+            <input type="text" name="payment_wompi_notification_email" value="{{ payment_wompi_notification_email }}" id="input-notification-email" class="form-control {% if error_notification_email %}is-invalid{% endif %}" />
+            {% if error_notification_email %}<div class="invalid-feedback">{{ error_notification_email }}</div>{% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="input-webhook-url">{{ entry_webhook_url }}</label>
+            <input type="text" name="payment_wompi_webhook_url" value="{{ payment_wompi_webhook_url }}" id="input-webhook-url" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="input-order-status">{{ entry_order_status }}</label>
+            <select name="payment_wompi_order_status_id" id="input-order-status" class="form-control">
+              {% for order_status in order_statuses %}
+              <option value="{{ order_status.order_status_id }}" {% if order_status.order_status_id == payment_wompi_order_status_id %}selected{% endif %}>{{ order_status.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-debug">{{ entry_debug }}</label>
+            <select name="payment_wompi_debug" id="input-debug" class="form-control">
+              <option value="1" {% if payment_wompi_debug %}selected{% endif %}>Yes</option>
+              <option value="0" {% if not payment_wompi_debug %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-sort-order">{{ entry_sort_order }}</label>
+            <input type="text" name="payment_wompi_sort_order" value="{{ payment_wompi_sort_order }}" id="input-sort-order" class="form-control" />
+          </div>
+
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+            <a href="{{ cancel }}" class="btn btn-light">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
